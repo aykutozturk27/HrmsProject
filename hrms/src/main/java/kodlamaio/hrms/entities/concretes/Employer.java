@@ -1,12 +1,11 @@
 package kodlamaio.hrms.entities.concretes;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -14,25 +13,32 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import kodlamaio.hrms.entities.abstracts.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "job_positions")
+@Table(name = "employers")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 
-public class JobPosition {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+public class Employer extends User {
 	
-	@Column(name = "title")
-	private String title;
+	@Column(name = "user_id")
+	private int userId;
+
+	@Column(name = "company_name")
+	private String companyName;
+	
+	@Column(name = "web_site")
+	private String webSite;
+	
+	@Column(name = "phone_number")
+	private String phoneNumber;
 	
 	@JsonIgnore
     @Column(name= "created_date")
@@ -42,4 +48,8 @@ public class JobPosition {
 	
 	@Column(name = "is_active")
 	private Boolean isActive;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "employer")
+	private List<ConfirmByEmployee> confirmByEmployees;
 }

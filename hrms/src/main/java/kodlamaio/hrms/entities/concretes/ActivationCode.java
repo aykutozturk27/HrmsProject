@@ -16,27 +16,32 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "job_positions")
+@Table(name = "activation_codes")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 
-public class JobPosition {
+public class ActivationCode {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "title")
-	private String title;
+	@Column(name = "activation_code")
+	private String activationCode;
+	
+	@Column(name = "is_verified")
+	private boolean isVerified;
 	
 	@JsonIgnore
-    @Column(name= "created_date")
-    @CreationTimestamp
+	@Column(name = "created_date")
+	@CreationTimestamp
     @Temporal(javax.persistence.TemporalType.DATE)
 	private Date createdDate;
 	

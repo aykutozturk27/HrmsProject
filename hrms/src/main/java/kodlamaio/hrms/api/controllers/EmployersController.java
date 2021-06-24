@@ -12,31 +12,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.JobPositionService;
+import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.JobPosition;
+import kodlamaio.hrms.entities.concretes.Employer;
 
 @RestController
-@RequestMapping("/api/jobpositions")
+@RequestMapping("/api/employers")
 @CrossOrigin
-public class JobPositionsController {
+public class EmployersController {
 
-	private JobPositionService jobPositionService;
+	private EmployerService employerService;
 
 	@Autowired
-	public JobPositionsController(JobPositionService jobPositionService) {
+	public EmployersController(EmployerService employerService) {
 		super();
-		this.jobPositionService = jobPositionService;
+		this.employerService = employerService;
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<JobPosition>> getAll(){
-		return this.jobPositionService.getAll();
+	public DataResult<List<Employer>> getAll(){
+		return this.employerService.getAll();
 	}
 	
 	@PostMapping("/add")
-	public Result Add(@RequestBody @Valid JobPosition jobPosition) {
-		return this.jobPositionService.add(jobPosition);
+	public Result Add(@RequestBody @Valid Employer employer) {
+		return this.employerService.add(employer);
 	}
 }
