@@ -7,45 +7,45 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "confirm_by_employees")
-@NoArgsConstructor
+@Table(name = "cities")
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=false)
+@NoArgsConstructor
 
-public class ConfirmByEmployee {
+public class City {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
+
+	@Column(name = "city_name")
+	private String cityName;
 	
-	@Column(name = "is_confirmed")
-	private Boolean isConfirmed;
-	
-	@Column(name = "confirm_date")
-	@CreationTimestamp
+	@JsonIgnore
+    @Column(name= "created_date")
+    @CreationTimestamp
     @Temporal(javax.persistence.TemporalType.DATE)
-	private Date confirmDate;
+	private Date createdDate;
+
+	@Column(name = "is_active")
+	private Boolean isActive;
 	
-	@ManyToOne()
-	@JoinColumn(name="employee_id")
-	private Employee employee;
+	@JsonIgnore
+	@OneToOne(mappedBy = "city")
+    private JobAdvertisement jobAdvertisement;
 	
-	@ManyToOne()
-	@JoinColumn(name="employer_id")
-	private Employer employer;
 }

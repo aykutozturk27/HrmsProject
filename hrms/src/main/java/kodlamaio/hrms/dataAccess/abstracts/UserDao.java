@@ -6,4 +6,6 @@ import kodlamaio.hrms.entities.abstracts.User;
 
 public interface UserDao extends JpaRepository<User, Integer> {
 
+	User getById(int id);
+	
 }

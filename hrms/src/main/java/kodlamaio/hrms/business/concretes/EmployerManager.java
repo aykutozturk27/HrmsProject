@@ -15,10 +15,11 @@ import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.core.utilities.validations.EmailValidator;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.abstracts.User;
-import kodlamaio.hrms.entities.concretes.ConfirmByEmployee;
+import kodlamaio.hrms.entities.concretes.Employee;
 import kodlamaio.hrms.entities.concretes.Employer;
 
 @Service
@@ -65,6 +66,10 @@ public class EmployerManager implements EmployerService {
 		if (!UserValidator.emailIsRequired(employer.getEmail())) {
 			return new ErrorResult(Messages.emailCannotBeEmpty);
 		}
+		
+		if (!EmailValidator.isEmailValid(employer.getEmail())) {
+			return new ErrorResult(Messages.emailPatternNotValid);
+		}
 
 		if (!UserValidator.passwordIsRequired(employer.getPassword())) {
 			return new ErrorResult(Messages.passwordCannotBeEmpty);
@@ -85,6 +90,10 @@ public class EmployerManager implements EmployerService {
 		if (!EmployerValidator.employerDomainCheck(employer)) {
 			return new ErrorResult(Messages.domainVerificationIsNotValid);
 		}
+		
+		if (this.userDao.getById(employer.getUserId()) == null) {
+			return new ErrorResult(Messages.userDoesNotExist);
+		}
 
 		if (this.mailService.isValidEmail(employer)) {
 			return new ErrorResult(Messages.emailAlreadyValid);
@@ -96,7 +105,7 @@ public class EmployerManager implements EmployerService {
 		}
 
 		this.mailService.isValidEmail(employer);
-		ConfirmByEmployee employee = new ConfirmByEmployee();
+		Employee employee = new Employee();
 		employee.setIsConfirmed(true);
 		// activation code
 		User savedUser = this.userDao.save(employer);

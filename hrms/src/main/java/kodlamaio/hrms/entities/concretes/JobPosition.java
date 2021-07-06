@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -42,4 +43,8 @@ public class JobPosition {
 	
 	@Column(name = "is_active")
 	private Boolean isActive;
+	
+	@OneToOne(mappedBy = "jobPosition")
+    private JobAdvertisement jobAdvertisement;
+	
 }

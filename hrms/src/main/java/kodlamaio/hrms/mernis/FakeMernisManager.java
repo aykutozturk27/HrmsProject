@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class FakeMernisManager {
 
 	public boolean ValidateCandidate(String nationalIdentity, String firstName, String lastName, int yearOfBirth) {
-		String regex = "^[0-9]+$";
+		String regex = "^[1-9][0-9]{9}[02468]$";
 
 		if (nationalIdentity.length() != 11) {
 			return false;

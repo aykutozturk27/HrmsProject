@@ -1,11 +1,10 @@
 package kodlamaio.hrms.entities.concretes;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -25,6 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@PrimaryKeyJoinColumn(name = "id")
 
 public class Employee extends User {
 	
@@ -37,6 +37,9 @@ public class Employee extends User {
 	@Column(name = "last_name")
 	private String lastname;
 	
+	@Column(name = "is_confirmed")
+	private Boolean isConfirmed;
+	
 	@JsonIgnore
 	@Column(name = "created_date")
 	@CreationTimestamp
@@ -45,8 +48,4 @@ public class Employee extends User {
 	
 	@Column(name = "is_active")
 	private Boolean isActive;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "employee")
-	private List<ConfirmByEmployee> confirmByEmployees;
 }

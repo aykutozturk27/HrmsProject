@@ -1,7 +1,6 @@
 package kodlamaio.hrms.business.validationRules;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import com.google.common.base.Strings;
 
 public class CandidateValidator {
@@ -27,8 +26,8 @@ public class CandidateValidator {
 		return false;
 	}
 	
-	public static boolean birthDateIsRequired(Date birthDate) {
-		if (!Strings.isNullOrEmpty(birthDate.toString())) {
+	public static boolean birthDateIsRequired(LocalDate birthDate) {
+		if (birthDate != null) {
 			return true; 
 		}
 		return false;

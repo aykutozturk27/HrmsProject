@@ -17,6 +17,7 @@ import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
+import kodlamaio.hrms.core.utilities.validations.EmailValidator;
 import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
 import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.abstracts.User;
@@ -61,6 +62,10 @@ public class CandidateManager implements CandidateService {
 		if (!CandidateValidator.lastNameIsRequired(candidate.getLastName())) {
 			return new ErrorResult(Messages.lastNameCannotBeEmpty);
 		}
+		
+		if (!CandidateValidator.nationalIdentityIsRequired(candidate.getNationalIdentity())) {
+			return new ErrorResult(Messages.nationalIdentityCannotBeEmpty);
+		}
 
 		if (!CandidateValidator.birthDateIsRequired(candidate.getBirthDate())) {
 			return new ErrorResult(Messages.birthDateCannotBeEmpty);
@@ -68,6 +73,10 @@ public class CandidateManager implements CandidateService {
 
 		if (!UserValidator.emailIsRequired(candidate.getEmail())) {
 			return new ErrorResult(Messages.emailCannotBeEmpty);
+		}
+		
+		if (!EmailValidator.isEmailValid(candidate.getEmail())) {
+			return new ErrorResult(Messages.emailPatternNotValid);
 		}
 
 		if (!UserValidator.passwordIsRequired(candidate.getPassword())) {
@@ -86,6 +95,10 @@ public class CandidateManager implements CandidateService {
 			return new ErrorResult(Messages.passwordAndRepasswordDoNotMatch);
 		}
 		
+		if (this.userDao.getById(candidate.getUserId()) == null) {
+			return new ErrorResult(Messages.userDoesNotExist);
+		}
+		
 		if (this.mailService.isValidEmail(candidate)) {
 			return new ErrorResult(Messages.emailAlreadyValid);
 		}
@@ -102,10 +115,8 @@ public class CandidateManager implements CandidateService {
 		
 		this.mernisService.isValidNationalIdentity(candidate);
 		this.mailService.isValidEmail(candidate);
-		//activation code
 		User savedUser = this.userDao.save(candidate);
 		this.activationCodeService.createActivationCode(savedUser);
-		//activation code
 		this.candidateDao.save(candidate);
 		return new SuccessResult(candidate.getEmail() + " adresine doğrulama kodu gönderildi");
 	}

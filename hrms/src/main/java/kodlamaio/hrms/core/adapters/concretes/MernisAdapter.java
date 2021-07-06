@@ -10,7 +10,6 @@ import kodlamaio.hrms.mernis.FakeMernisManager;
 public class MernisAdapter implements MernisService {
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean isValidNationalIdentity(Candidate candidate) {
 		FakeMernisManager manager = new FakeMernisManager();
 		boolean isValidate = manager.ValidateCandidate(candidate.getNationalIdentity(), candidate.getFirstName(), 

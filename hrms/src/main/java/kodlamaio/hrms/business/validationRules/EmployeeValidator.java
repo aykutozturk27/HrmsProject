@@ -18,25 +18,4 @@ public class EmployeeValidator {
 		return false;
 	}
 	
-//	public static boolean emailIsRequired(String email) {
-//		if (!Strings.isNullOrEmpty(email)) {
-//			return true; 
-//		}
-//		return false;
-//	}
-//	
-//	public static boolean passwordIsRequired(String password) {
-//		if (!Strings.isNullOrEmpty(password)) {
-//			return true; 
-//		}
-//		return false;
-//	}
-//	
-//	public static boolean repasswordIsRequired(String repassword) {
-//		if (!Strings.isNullOrEmpty(repassword)) {
-//			return true; 
-//		}
-//		return false;
-//	}
-	
 }

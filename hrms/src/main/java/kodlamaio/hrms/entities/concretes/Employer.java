@@ -1,17 +1,18 @@
 package kodlamaio.hrms.entities.concretes;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import kodlamaio.hrms.entities.abstracts.User;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@PrimaryKeyJoinColumn(name = "id")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 
 public class Employer extends User {
 	
@@ -49,7 +52,6 @@ public class Employer extends User {
 	@Column(name = "is_active")
 	private Boolean isActive;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "employer")
-	private List<ConfirmByEmployee> confirmByEmployees;
+	@OneToOne(mappedBy = "employer")
+    private JobAdvertisement jobAdvertisement;
 }

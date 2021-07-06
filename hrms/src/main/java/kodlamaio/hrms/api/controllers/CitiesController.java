@@ -10,31 +10,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.EmployerService;
+import kodlamaio.hrms.business.abstracts.CityService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.Employer;
+import kodlamaio.hrms.entities.concretes.City;
 
 @RestController
-@RequestMapping("/api/employers")
+@RequestMapping("/api/cities")
 @CrossOrigin
-public class EmployersController {
-
-	private EmployerService employerService;
-
+public class CitiesController {
+	
+	private CityService cityService;
+	
 	@Autowired
-	public EmployersController(EmployerService employerService) {
+	public CitiesController(CityService cityService) {
 		super();
-		this.employerService = employerService;
+		this.cityService = cityService;
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<Employer>> getAll(){
-		return this.employerService.getAll();
+	public DataResult<List<City>> getAll(){
+		return this.cityService.getAll();
 	}
 	
 	@PostMapping("/add")
-	public Result Add(@RequestBody Employer employer) {
-		return this.employerService.add(employer);
+	public Result Add(@RequestBody City city) {
+		return this.cityService.add(city);
 	}
 }
